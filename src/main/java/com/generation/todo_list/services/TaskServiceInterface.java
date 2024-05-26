@@ -30,4 +30,7 @@ public interface TaskServiceInterface {
     // Delete task
     public abstract boolean deleteTask(Long id);
 
+    // Get Task by id
+    public abstract Optional<Task> getTask(Long id);
+
 }

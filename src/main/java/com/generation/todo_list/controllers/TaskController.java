@@ -26,7 +26,7 @@ public class TaskController {
         this.taskServiceInterface = taskServiceInterface;
     }
 
-    // TODO : Implement Custom Exception Handling
+    // TODO : Implemented - Custom Exception Handling
     //  Create a new task
     @PostMapping("/add")
     public ResponseEntity<Object> createTask(@Valid @RequestBody Task task) throws Exception {
@@ -42,7 +42,7 @@ public class TaskController {
     }
 
 
-    // TODO : Implement Custom Exception Handling
+    // TODO : Implemented - Custom Exception Handling
     //  Get all tasks
     @GetMapping("/all")
     public ResponseEntity<Object> getAllTasks() throws Exception {
@@ -58,7 +58,7 @@ public class TaskController {
     }
 
 
-    // TODO : Implement Exception Handling
+    // TODO : Implemented - Exception Handling
     //  Update Task by Id
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateTask(@PathVariable("id") Long id, @Valid @RequestBody Task task) {
@@ -75,7 +75,7 @@ public class TaskController {
 
     }
 
-    // TODO : Implement Custom Exception Handling
+    // TODO : Implemented - Custom Exception Handling
     //  Delete a task by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTask(@PathVariable("id") Long id) throws Exception {
@@ -91,7 +91,7 @@ public class TaskController {
 
     }
 
-    // TODO : Implement Custom Exception Handling
+    // TODO : Implemented - Custom Exception Handling
     //  Get all completed tasks
     @GetMapping("/completed")
     public ResponseEntity<Object> getAllCompletedTasks() throws Exception {
@@ -106,7 +106,7 @@ public class TaskController {
         }
     }
 
-    // TODO : Implement Custom Exception Handling
+    // TODO : Implemented - Custom Exception Handling
     //  Get all incomplete tasks
     @GetMapping("/incomplete")
     public ResponseEntity<Object> getAllInCompleteTasks() throws Exception {
@@ -116,6 +116,21 @@ public class TaskController {
                 throw new ResourceNotFoundException("No incomplete task(s) found.");
             }
             return new ResponseEntity<>(tasks, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // TODO : Implemented - Custom Exception Handling
+    //  Get task by id
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getTaskById(@PathVariable("id") Long id) throws Exception {
+        try {
+            Optional<Task> task = taskServiceInterface.getTask(id);
+            if (task.isEmpty()) {
+                throw new ResourceNotFoundException(id.toString() + " not found.");
+            }
+            return new ResponseEntity<>(task, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             throw new RuntimeException(e);
         }

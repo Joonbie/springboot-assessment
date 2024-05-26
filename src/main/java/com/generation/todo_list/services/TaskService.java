@@ -102,5 +102,11 @@ public class TaskService implements TaskServiceInterface {
         }
     }
 
+    // Get task by id
+    @Override
+    public Optional<Task> getTask(Long id) {
+        return taskRepository.findById(id);
+    }
+
 
 }
